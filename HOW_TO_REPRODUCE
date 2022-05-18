@@ -1,0 +1,14 @@
+#build musl
+mkdir build
+cd build
+../configure --enable-shared --with-malloc=oldmalloc
+make -j8
+
+#somehow minimal test case
+gcc ../problemMalloc.c -I include lib/libc.a -o x.out && ./x.out
+
+#minimal testcase feeding the how big a big allocation should be
+gcc ../problemMalloc.c -I include lib/libc.a -o x.out -DMAGIC_NUMBER=100000 && ./x.out
+
+#stress test
+gcc ../problemMalloc.c -I include lib/libc.a -o x.out -DKEEP_GOING && ./x.out
